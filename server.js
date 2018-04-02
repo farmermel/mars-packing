@@ -54,17 +54,27 @@ app.patch('/api/v1/items/:id', async (request, response) => {
     return response
       .status(404)
       .send({ error: 'No matching item found in database' })
-  }
+  };
   database('items')
     .where('id', request.params.id)
     .update({ packed: request.body.packed })
     .then(id => {
-      return response.status(200).json({id})
+      return response.status(200).json({ id })
     })
     .catch(error => {
-      return response.status(500).send({error})
+      return response.status(500).send({ error })
+    });
+});
+
+app.delete('/api/v1/items/:id', (request, response) => {
+  database('items').where('id', request.params.id).del()
+    .then(id => {
+      return response.status(204).json(id);
     })
-})
+    .catch(error => {
+      return response.status(500).send({ error });
+    });
+});
 
 app.listen(app.get('port'), () => {
   console.log(`Server running on port ${app.get('port')}`)
