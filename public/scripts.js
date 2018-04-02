@@ -19,8 +19,9 @@ const appendItem = item => {
   $('.packing-wrap').prepend(`
     <article>
       <h2>${item.name}</h2>
-      <label for='packed-${item.id}'>Packed</label>
-      <input type='checkbox' id='packed-${item.id}' ${checked} />
+      <label for='packed-${item.id}'>Packed
+        <input type='checkbox' id='packed-${item.id}' ${checked} />
+      </label>
       <button id='delete-${item.id}'>Delete</button>
     </article>
   `)
