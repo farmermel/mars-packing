@@ -45,6 +45,9 @@ const loadItems = async () => {
   try {
     const dbItemsString = await fetch('api/v1/items');
     const dbItems = await dbItemsString.json();
+    const sortedItems = dbItems.sort((a, b) => {
+      return a.id - b.id
+    })
     dbItems.forEach(item => {
       appendItem(item);
     });
