@@ -1,0 +1,103 @@
+body {
+  font-family: 'Cousine', monospace;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px 80px;
+  background-image: url('./assets/astronaut.png');
+  background-position-x: right;
+  background-repeat: no-repeat;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 304px;
+}
+
+h1 {
+  font-size: 3em;
+  color: #c50049;
+}
+
+h2 {
+  display: inline-block;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 4px 25px 24px 25px;
+  margin: 10px 10px 10px 0;
+  border: 2px solid #E1E6E8;
+  border-radius: 5px;
+}
+
+button {
+  width: 40%;
+  height: 30px;
+  font-size: 0.9em;
+  background-color: #c50049;
+  border: 2px solid #E1E6E8;
+  border-radius: 5px;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #820634;
+  cursor: pointer;
+}
+
+label {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+form label {
+  font-size: 1.5em;
+}
+
+.packing-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+#item-input {
+  border: 2px solid #E1E6E8;
+  border-radius: 5px;
+  font-size: 1em;
+  height: 33px;
+  width: 98.5%;
+}
+
+#add-itm-btn {
+  background-color: #77BDE0;
+  font-size: 1em;
+  height: 40px;
+  width: 100%;
+}
+
+#add-itm-btn:hover {
+  background-color: #006ad3;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  body {
+    background-size: 600px;
+    background-position-y: 100px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    background-size: 400px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    background-image: none;
+  }
+}
