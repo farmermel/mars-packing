@@ -11,4 +11,4 @@ The original project spec can be found [here](https://gist.github.com/robbiejaeg
 The live site can be seen [here](https://suliteanu-mars-packing.herokuapp.com/)
 
 ## Design
-![Layout](https://i.imgur.com/WUUZlO9.png)
+![Layout](https://i.imgur.com/sJOZTEM.png)
