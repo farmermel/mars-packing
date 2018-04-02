@@ -39,6 +39,30 @@ app.post('/api/v1/items', (request, response) => {
     })
     .catch(error => {
       return response.status(500).json({ error })
+    });
+});
+
+app.patch('/api/v1/items/:id', async (request, response) => {
+  if(request.body.packed === undefined) {
+    return response
+      .status(422)
+      .send({ error: 'Expected body format: {packed:<boolean>}, missing packed' });
+  };
+
+  const reqItem = await database('items').where('id', request.params.id).select();
+  if (!reqItem.length) {
+    return response
+      .status(404)
+      .send({ error: 'No matching item found in database' })
+  }
+  database('items')
+    .where('id', request.params.id)
+    .update({ packed: request.body.packed })
+    .then(id => {
+      return response.status(200).json({id})
+    })
+    .catch(error => {
+      return response.status(500).send({error})
     })
 })
 
