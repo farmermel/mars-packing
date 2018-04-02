@@ -23,7 +23,17 @@ h2 {
   display: inline-block;
 }
 
+hr {
+  border: none;
+  margin: 30px 0;
+  display: inline-block;
+  height: 3px;
+  background-color: #E1E6E8;
+  width: 300px;
+}
+
 article {
+  box-shadow: 0 0 14px #fff;
   display: flex;
   flex-direction: column;
   width: 250px;
@@ -34,6 +44,7 @@ article {
 }
 
 button {
+  box-shadow: 0 0 14px #fff;
   width: 40%;
   height: 30px;
   font-size: 0.9em;
@@ -64,6 +75,7 @@ form label {
 }
 
 #item-input {
+  box-shadow: 0 0 14px #fff;
   border: 2px solid #E1E6E8;
   border-radius: 5px;
   font-size: 1em;
@@ -72,6 +84,7 @@ form label {
 }
 
 #add-itm-btn {
+  box-shadow: 0 0 14px #fff;
   background-color: #77BDE0;
   font-size: 1em;
   height: 40px;
