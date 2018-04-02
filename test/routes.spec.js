@@ -58,7 +58,7 @@ describe('API ROUTES', () => {
       .catch(error => {
         throw error;
       });
-    });
+    }); 
 
     it('returns a status of 422 if request body is missing param', () => {
       return chai.request(server)
@@ -112,6 +112,19 @@ describe('API ROUTES', () => {
       .then(response => {
         response.should.have.status(404);
         response.body.error.should.equal('No matching item found in database');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
+
+  describe('DELETE /api/v1/items/:id', () => {
+    it('returns id of successfully deleted item and status 204', () => {
+      return chai.request(server)
+      .delete('/api/v1/items/1')
+      .then(response => {
+        response.should.have.status(204);
       })
       .catch(error => {
         throw error;
