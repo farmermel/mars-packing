@@ -23,6 +23,26 @@ describe('API ROUTES', () => {
     })
   })
 
+  describe('GET /api/v1/items', () => {
+    it('returns an array of all items and status 200', () => {
+      return chai.request(server)
+      .get('/api/v1/items')
+      .then(response => {
+        response.should.have.status(200);
+        response.body.should.be.a('array');
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('name');
+        response.body[0].name.should.equal('The Martian');
+        response.body[0].should.have.property('created_at');
+        response.body[0].should.have.property('updated_at');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
+
   describe('POST /api/v1/items', () => {
     it('returns an id on successful post to db', () => {
       return chai.request(server)
@@ -51,6 +71,40 @@ describe('API ROUTES', () => {
       .catch(error => {
         throw error;
       })
+    })
+  })
+
+  describe('PATCH /api/v1/item/:id', () => {
+    it.skip('returns the id and contents of patched item and status 200', () => {
+      return chai.request(server)
+      .patch('/api/v1/item/1')
+      .send({
+        packed: true
+      })
+      .then(response => {
+        response.should.have.status(200);
+        response.body.should.have.property('id');
+        response.body.should.have.property('name');
+        response.body.should.have.property('packed');
+        response.body.packed.should.equal(false);
+      })
+      .catch(error => {
+        throw error;
+      })
+    })
+
+    it.skip('returns status of 422 if body is missing information', () => {
+      return chai.request(server)
+      .patch('/api/v1/item/1')
+      .send({})
+      .then(response => {
+        response.should.have.status(422);
+        response.body.error.should.equal('Expected body format: {packed:<boolean>}, missing packed');
+      })
+    })
+
+    it.skip('returns status of 404 if item is not found in db', () => {
+
     })
   })
 });
