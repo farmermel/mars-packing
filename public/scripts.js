@@ -19,9 +19,9 @@ const appendItem = item => {
   $('.packing-wrap').prepend(`
     <article>
       <h2>${item.name}</h2>
-      <label for='check-${item.id}'>Packed</label>
-      <input type='checkbox' id='check-${item.id}' ${checked} />
-      <button class="delete">Delete</button>
+      <label for='packed-${item.id}'>Packed</label>
+      <input type='checkbox' id='packed-${item.id}' ${checked} />
+      <button id='delete-${item.id}'>Delete</button>
     </article>
   `)
 }
@@ -42,13 +42,44 @@ const handleSubmit = (e) => {
 };
 
 const loadItems = async () => {
-  const dbItemsString = await fetch('api/v1/items');
-  const dbItems = await dbItemsString.json();
-  dbItems.forEach(item => {
-    appendItem(item);
-  });
+  try {
+    const dbItemsString = await fetch('api/v1/items');
+    const dbItems = await dbItemsString.json();
+    dbItems.forEach(item => {
+      appendItem(item);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+const togglePacked = async (event, id) => {
+  const packed = $(event.target).prop('checked');
+  try {
+    await fetch(`/api/v1/items/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ packed }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+const deleteItem = (event, id) => {
+  console.log('d', event);
+};
+
+const determineItemAction = (e) => {
+  const action = $(e.target).attr('id').split('-');
+  action[0] === 'packed' 
+    ? togglePacked(e, action[1])
+    : deleteItem(e, action[1]);
+};
+
+$('.packing-wrap').on('click', determineItemAction)
 $('.add-item-form').on('submit', handleSubmit);
 
 $('document').ready(() => {
