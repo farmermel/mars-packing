@@ -57,8 +57,8 @@ describe('API ROUTES', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
+      });
+    });
 
     it('returns a status of 422 if request body is missing param', () => {
       return chai.request(server)
@@ -70,41 +70,52 @@ describe('API ROUTES', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('PATCH /api/v1/item/:id', () => {
-    it.skip('returns the id and contents of patched item and status 200', () => {
+    it('returns the id of patched item and status 200', () => {
       return chai.request(server)
-      .patch('/api/v1/item/1')
+      .patch('/api/v1/items/1')
       .send({
         packed: true
       })
       .then(response => {
         response.should.have.status(200);
         response.body.should.have.property('id');
-        response.body.should.have.property('name');
-        response.body.should.have.property('packed');
-        response.body.packed.should.equal(false);
       })
       .catch(error => {
         throw error;
-      })
-    })
+      });
+    });
 
-    it.skip('returns status of 422 if body is missing information', () => {
+    it('returns status of 422 if body is missing information', () => {
       return chai.request(server)
-      .patch('/api/v1/item/1')
+      .patch('/api/v1/items/1')
       .send({})
       .then(response => {
         response.should.have.status(422);
         response.body.error.should.equal('Expected body format: {packed:<boolean>}, missing packed');
       })
-    })
+      .catch(error => {
+        throw error;
+      });
+    });
 
-    it.skip('returns status of 404 if item is not found in db', () => {
-
-    })
-  })
+    it('returns status of 404 if item is not found in db', () => {
+      return chai.request(server)
+      .patch('/api/v1/items/3000')
+      .send({
+        packed: true
+      })
+      .then(response => {
+        response.should.have.status(404);
+        response.body.error.should.equal('No matching item found in database');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
 });
