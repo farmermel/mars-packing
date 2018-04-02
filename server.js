@@ -13,12 +13,22 @@ app.use(express.static('public'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use(bodyParser.json());
 
+app.get('/api/v1/items', (request, response) => {
+  database('items').select()
+  .then(items => {
+    return response.status(200).json(items);
+  })
+  .catch(error => {
+    throw error;
+  })
+});
+
 app.post('/api/v1/items', (request, response) => {
   if (!request.body.name) {
     return response
       .status(422)
       .send({ error: 'Expected body format: {name:<string>}, missing name' })
-  }
+  };
   const postObj = { 
     name: request.body.name, packed: false
   };

@@ -14,12 +14,13 @@ const postItemDB = async name => {
   }
 }
 
-const appendItem = name => {
-  $('.packing-wrap').append(`
+const appendItem = item => {
+  const checked = item.packed ? 'checked' : '';
+  $('.packing-wrap').prepend(`
     <article>
-      <h2>${name}</h2>
-      <label for='check-${name}'>Packed</label>
-      <input type='checkbox' id='check-${name}' />
+      <h2>${item.name}</h2>
+      <label for='check-${item.id}'>Packed</label>
+      <input type='checkbox' id='check-${item.id}' ${checked} />
       <button class="delete">Delete</button>
     </article>
   `)
@@ -28,12 +29,28 @@ const appendItem = name => {
 const handleSubmit = (e) => {
   e.preventDefault();
   const name = $('#item-input').val();
+  const nameObj = {
+    name,
+    packed: false
+  };
   try {
     postItemDB(name);
-    appendItem(name);
+    appendItem(nameObj);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-$('.add-item-form').on('submit', handleSubmit)
+const loadItems = async () => {
+  const dbItemsString = await fetch('api/v1/items');
+  const dbItems = await dbItemsString.json();
+  dbItems.forEach(item => {
+    appendItem(item);
+  });
+};
+
+$('.add-item-form').on('submit', handleSubmit);
+
+$('document').ready(() => {
+  loadItems();
+});
