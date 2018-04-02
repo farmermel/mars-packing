@@ -68,8 +68,16 @@ const togglePacked = async (event, id) => {
   }
 };
 
-const deleteItem = (event, id) => {
-  console.log('d', event);
+const deleteItem = async (event, id) => {
+  try {
+    await fetch(`/api/v1/items/${id}`, {
+      method: 'DELETE'
+    });
+    $('.packing-wrap').empty();
+    await loadItems();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const determineItemAction = (e) => {
